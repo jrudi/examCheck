@@ -1,89 +1,39 @@
 package crawler;
 
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Date;
 
 public class Exam {
-	private int pruefungsnummer, bonus;
-	
-	private String pruefungsname,semester,pruefer,form,status,versuch;
-		
-	private Date pruefungsdatum;
-		
+	private String name;
 	private double note;
+	private int ects;
+	private boolean bestanden;
+	private Date datum;
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-	public int getPruefungsnummer() {
-		return pruefungsnummer;
+	public int getECTS() {
+		return ects;
 	}
 
-	public void setPrüfungsnummer(int pruefungsnummer) {
-		this.pruefungsnummer = pruefungsnummer;
+	public void setECTS(int bonus) {
+		this.ects = bonus;
 	}
 
-	public String getSemester() {
-		return semester;
+	public String getName() {
+		return name;
 	}
 
-	public void setSemester(String semester) {
-		this.semester = semester;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getBonus() {
-		return bonus;
+
+	public Date getDatum() {
+		return datum;
 	}
 
-	public void setBonus(int bonus) {
-		this.bonus = bonus;
-	}
-
-	public String getPruefungsname() {
-		return pruefungsname;
-	}
-
-	public void setPruefungsname(String prüfungsname) {
-		pruefungsname = prüfungsname;
-	}
-
-	public String getPrüfer() {
-		return pruefer;
-	}
-
-	public void setPrüfer(String pruefer) {
-		this.pruefer = pruefer;
-	}
-
-	public String getForm() {
-		return form;
-	}
-
-	public void setForm(String form) {
-		this.form = form;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getVersuch() {
-		return versuch;
-	}
-
-	public void setVersuch(String versuch) {
-		this.versuch = versuch;
-	}
-
-	public Date getPrüfungsdatum() {
-		return pruefungsdatum;
-	}
-
-	public void setPrüfungsdatum(Date prüfungsdatum) {
-		this.pruefungsdatum = prüfungsdatum;
+	public void setDatum(Date date) {
+		this.datum = date;
 	}
 
 	public double getNote() {
@@ -94,16 +44,41 @@ public class Exam {
 		this.note = note;
 	}
 	
+	public void setBestanden(boolean b){
+		this.bestanden = b;
+	}
+	
+	public boolean bestanden(){
+		return this.bestanden;
+	}
+	
 	public String toString(){
-		return this.pruefungsname + " Versuch: " + this.versuch + " Note: "+ this.note;
+		String s = (this.bestanden?"":"Nicht") + " bestanden";
+		return this.name + " am: " + sdf.format(this.datum)+ " Note: "+ this.note + ". " + s;
 	}
 	
-	public String intTest(){
-		return 	pruefungsnummer + " " +  semester + " " + bonus + " " + sdf.format(pruefungsdatum);
-
+	public String save(){
+		String s = this.name + "//" + sdf.format(this.datum) + "//" + this.note + "//" + this.ects + "//" + this.bestanden;
+	
+		return s;
 	}
 	
-	public static void main(String[] args) {
+	public static Exam readFile(String in){
+		Exam e = new Exam();
+		String[] list = in.split("//");
 		
+		if(list.length==5){
+		e.name = list[0];
+		try {
+			e.datum = sdf.parse(list[1]);
+		} catch (ParseException e1) {
+			e.datum = new Date();
+			e1.printStackTrace();
+		}
+		e.note = Double.parseDouble(list[2]);
+		e.ects = Integer.parseInt(list[3]);
+		e.bestanden = Boolean.parseBoolean(list[4]);
+		}
+		return e;
 	}
 }

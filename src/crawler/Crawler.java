@@ -1,7 +1,10 @@
 package crawler;
 
+import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.logging.Level;
+import prop.Props;
 
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
@@ -13,14 +16,18 @@ public class Crawler {
 	private ArrayList<Exam> examList = new ArrayList<Exam>();
 
 	public static void main(String[] args) throws Exception {
+		
+		java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); 
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 		Crawler c = new Crawler();
-		c.crawl();
-		for(Exam e:c.examList){
-			System.out.println(e.intTest());
-		}
-	}
+		
+		c.login();
+		c.find();
+		c.compare();
+		
+}
 
-	public void crawl() throws Exception {
+	public void login() throws Exception {
 		try (final WebClient webClient = new WebClient()) {
 
 			HtmlPage cas = webClient.getPage(
@@ -30,8 +37,8 @@ public class Crawler {
 			HtmlTextInput name = form.getInputByName("username");
 			HtmlPasswordInput pw = form.getInputByName("password");
 
-			name.setValueAttribute("jrudi");
-			pw.setValueAttribute("a39mxx");
+			name.setValueAttribute(Props.PORTAL_NAME);
+			pw.setValueAttribute(Props.PORTAL_PW);
 
 			HtmlPage portalStart = button.click();
 			HtmlPage pruefungen = portalStart.getAnchors().get(14).click();
@@ -41,72 +48,86 @@ public class Crawler {
 			while (it.hasNext()) {
 				HtmlElement ele = it.next();
 				if (ele.getAttribute("cellspacing").equals("0") && ele.getAttribute("border").equals("1")) {
-					table = (HtmlTable) ele;
+					this.table = (HtmlTable) ele;
 				}
-			}
-
-			for (final HtmlTableRow row : table.getRows()) {
-				if(table.getRows().indexOf(row)==0)
-					continue;
-			
-				Exam exam = new Exam();
-				// for (final HtmlTableCell cell : row.getCells()) {
-				// System.out.println(" Found cell: " + cell.asText());
-				// }
-								
-				try{
-					String a = row.getCell(0).asText();
-					exam.setPrüfungsnummer(Integer.parseInt(a.substring(0, a.length()-1)));
-				}catch(NumberFormatException e){
-					exam.setPrüfungsnummer(0);
-				}
-								
-				try{
-					exam.setBonus(Integer.parseInt(row.getCell(8).asText()));
-				}catch(NumberFormatException e){
-					exam.setBonus(-1);
-				}
-				
-				try{
-				exam.setPrüfungsdatum(sdf.parse(row.getCell(3).asText()));
-				}catch (ParseException pe){
-					exam.setPrüfungsdatum(sdf.parse("01.01.2016"));
-				}
-				
-				try{
-					double n = Double.parseDouble(row.getCell(7).asText().replace(",", "."));
-					exam.setNote(n);
-				}catch(NumberFormatException e){
-					exam.setNote(0.0);
-				}
-
-				exam.setSemester(row.getCell(1).asText());
-				exam.setPruefungsname(row.getCell(4).asText());
-				exam.setPrüfer(row.getCell(5).asText());
-				exam.setForm(row.getCell(6).asText());
-				exam.setStatus(row.getCell(9).asText());
-				exam.setVersuch(row.getCell(10).asText());
-				examList.add(exam);
 			}
 		}
 	}
-	public void writeFile() {
-		/*
-		 * File f = new File("notenspielgel.txt"); FileWriter bw = new
-		 * FileWriter(f);
-		 * 
-		 * BufferedReader in = new BufferedReader(new
-		 * InputStreamReader(page2.getWebResponse().getContentAsStream()));
-		 * String inputLine; StringBuffer response = new StringBuffer();
-		 * 
-		 * while ((inputLine = in.readLine()) != null) { boolean b = false;
-		 * if(inputLine.contains("<!-- BeginnMannheim -->")){ b=true; } if(b){
-		 * bw.write(inputLine); } // // response.append(inputLine); //
-		 * System.out.println(inputLine); }
-		 * 
-		 * in.close(); bw.close();
-		 */
-		// System.out.println(page2.getElementsByTagName("table").get(0).asText());
+
+	public void find() {
+		for (final HtmlTableRow row : table.getRows()) {
+			if (table.getRows().indexOf(row) < 2)
+				continue;
+
+			Exam exam = new Exam();
+
+			try {
+				exam.setECTS(Integer.parseInt(row.getCell(8).asText()));
+			} catch (NumberFormatException e) {
+				exam.setECTS(-1);
+			}
+
+			try {
+				exam.setDatum(sdf.parse(row.getCell(3).asText()));
+			} catch (ParseException pe) {
+				exam.setDatum(new Date());
+			}
+
+			try {
+				double n = Double.parseDouble(row.getCell(7).asText().replace(",", "."));
+				exam.setNote(n);
+			} catch (NumberFormatException e) {
+				exam.setNote(0.0);
+			}
+
+			exam.setName(row.getCell(4).asText());
+			exam.setBestanden(!row.getCell(9).asText().contains("nicht"));
+			examList.add(exam);
+		}
+	}
+
+	public void compare(){
+		int old = this.load();
+		int current = examList.size();
+		if(current>old){
+			int diff = current-old;
+			System.out.println(diff + " neue Ergebnisse!");
+			for(int i=0;i<diff;i++){
+				String subject = "Klausurergebnis " + examList.get(i).getName();
+				System.out.println("Sent: " + subject);
+				mailer.Mailer.sendMail(examList.get(i).toString(), subject);
+			}
+			
+			this.save(current);
+		}else{
+			System.out.println("Nothing new");
+		}
+		
+	}
+	
+	private int load() {
+		int a = 0;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(
+					new File(getClass().getClassLoader().getResource("resources/notenspiegel.txt").getFile())));
+			a = Integer.parseInt(br.readLine());
+			br.close();
+		} catch (IOException | NumberFormatException e) {
+			a = 0;
+			e.printStackTrace();
+		}
+		return a;
+	}
+
+	public void save(int i) {
+		File f = new File(getClass().getClassLoader().getResource("resources/notenspiegel.txt").getFile());
+		try {
+			FileWriter fw = new FileWriter(f);
+			fw.write(i + "");
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 }

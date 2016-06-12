@@ -1,17 +1,12 @@
 package mailer;
 import javax.mail.*;
+import prop.Props;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import java.util.Properties;
 
 public class Mailer {
-	public static void main(String[] args) {
-		String subject = "Neues Klausurergebnis";
-		String text = "Hallo, deine Note in WifoIV ist 1,0";
-		sendMail(text, subject);
-	}
-	
 	
 	public static void sendMail(String text, String subject){
 		Properties props = new Properties();
@@ -25,22 +20,20 @@ public class Mailer {
 		Session session = Session.getDefaultInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("jr6tunes","LuckyStrike");
+					return new PasswordAuthentication(Props.GMAIL_NAME,Props.GMAIL_PW);
 				}
 			});
 
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("from@no-spam.com"));
+			message.setFrom(new InternetAddress(Props.GMAIL_NAME + "@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("jonas.rudi@hotmail.com"));
-			message.setSubject("Testing Subject");
+					InternetAddress.parse(Props.ADRESS_RECEIVE));
+			message.setSubject(subject);
 			message.setText(text);
 
 			Transport.send(message);
-
-			System.out.println("Done");
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
