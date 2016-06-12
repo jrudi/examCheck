@@ -9,4 +9,7 @@ public class Props {
 	public static final String PORTAL_NAME = "";
 	public static final String PORTAL_PW = "";
 	
+	
+	
+	
 }
