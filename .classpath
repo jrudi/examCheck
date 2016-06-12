@@ -2,27 +2,27 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/workspace/examCheck/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/cssparser-0.9.19.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/htmlunit-2.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/htmlunit-core-js-2.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/httpclient-4.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/httpmime-4.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/jetty-io-9.2.17.v20160517.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/jetty-util-9.2.17.v20160517.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/neko-htmlunit-2.21.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/sac-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/serializer-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/websocket-api-9.2.17.v20160517.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/websocket-client-9.2.17.v20160517.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/websocket-common-9.2.17.v20160517.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/xalan-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jonas/Downloads/htmlunit-2.22-bin/htmlunit-2.22/lib/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/cssparser-0.9.19.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/htmlunit-2.22.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/htmlunit-core-js-2.22.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/jetty-io-9.2.17.v20160517.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/jetty-util-9.2.17.v20160517.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/neko-htmlunit-2.21.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/serializer-2.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/websocket-api-9.2.17.v20160517.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/websocket-client-9.2.17.v20160517.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/websocket-common-9.2.17.v20160517.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/xalan-2.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/workspace/examCheck/lib/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
