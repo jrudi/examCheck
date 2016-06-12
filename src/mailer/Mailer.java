@@ -7,7 +7,11 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Mailer {
-	
+	/**
+	 * sends a mail with the given Text and subject
+	 * @param text
+	 * @param subject
+	 */
 	public static void sendMail(String text, String subject){
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -39,4 +43,5 @@ public class Mailer {
 			throw new RuntimeException(e);
 		}
 	}
+	
 }

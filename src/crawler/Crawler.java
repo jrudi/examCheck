@@ -26,6 +26,10 @@ public class Crawler {
 		c.compare();
 		
 }
+	/**
+	 * Logs in to the Portal and finds the Table on the Notenspiegel page
+	 * @throws Exception
+	 */
 
 	public void login() throws Exception {
 		try (final WebClient webClient = new WebClient()) {
@@ -53,7 +57,9 @@ public class Crawler {
 			}
 		}
 	}
-
+/**
+ * finds all Exams and stores them as Exam Objects
+ */
 	public void find() {
 		for (final HtmlTableRow row : table.getRows()) {
 			if (table.getRows().indexOf(row) < 2)
@@ -86,9 +92,17 @@ public class Crawler {
 		}
 	}
 
+	/**
+	 * compares different the old number of exams with the new number
+	 */
+	
 	public void compare(){
 		int old = this.load();
 		int current = examList.size();
+		if(old==-1){
+			save(current);
+			return;
+		}
 		if(current>old){
 			int diff = current-old;
 			System.out.println(diff + " neue Ergebnisse!");
@@ -105,6 +119,10 @@ public class Crawler {
 		
 	}
 	
+	/**
+	 * loads the int saved in notenspiegel.txt
+	 * @return
+	 */
 	private int load() {
 		int a = 0;
 		try {
@@ -119,6 +137,10 @@ public class Crawler {
 		return a;
 	}
 
+	/**
+	 * overwrites the int at notenspiegel.txt
+	 * @param i
+	 */
 	public void save(int i) {
 		File f = new File(getClass().getClassLoader().getResource("resources/notenspiegel.txt").getFile());
 		try {

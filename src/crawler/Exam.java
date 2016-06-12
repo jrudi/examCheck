@@ -2,7 +2,11 @@ package crawler;
 
 import java.text.*;
 import java.util.Date;
-
+/**
+ * representation of an Exam, only name, grade, ECTS, date and passed are saved
+ * @author JRudi
+ *
+ */
 public class Exam {
 	private String name;
 	private double note;
