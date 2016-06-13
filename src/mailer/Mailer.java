@@ -1,6 +1,6 @@
 package mailer;
 import javax.mail.*;
-import prop.Props;
+import prop.Config;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -20,20 +20,25 @@ public class Mailer {
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "465");
+		
+		String name = Config.loadProp("GMAIL_NAME");
+		String pw = Config.loadProp("GMAIL_PW");
+		String receiver = Config.loadProp("ADRESS_RECEIVE");
 
+		
 		Session session = Session.getDefaultInstance(props,
 			new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(Props.GMAIL_NAME,Props.GMAIL_PW);
+					return new PasswordAuthentication(name,pw);
 				}
 			});
 
 		try {
-
+			
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(Props.GMAIL_NAME + "@gmail.com"));
+			message.setFrom(new InternetAddress(name + "@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(Props.ADRESS_RECEIVE));
+					InternetAddress.parse(receiver));
 			message.setSubject(subject);
 			message.setText(text);
 
