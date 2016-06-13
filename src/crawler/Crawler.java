@@ -13,6 +13,7 @@ public class Crawler {
 	private HtmlTable table;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 	private ArrayList<Exam> examList = new ArrayList<Exam>();
+	private WebClient webClient = new WebClient();
 
 	public static void main(String[] args) throws Exception {
 
@@ -32,7 +33,7 @@ public class Crawler {
 	 */
 
 	public void login() throws Exception {
-		try (final WebClient webClient = new WebClient()) {
+		
 			System.out.println("connecting...");
 			HtmlPage cas = webClient.getPage(
 					"https://cas.uni-mannheim.de/cas/login?service=https%3A%2F%2Fportal.uni-mannheim.de%2Fqisserver%2Frds%3Fstate%3Duser%26type%3D1");
@@ -53,7 +54,8 @@ public class Crawler {
 					this.table = (HtmlTable) ele;
 				}
 			}
-		}
+			notenspiegel.getAnchors().get(4).click();
+			System.out.println("logging out...");
 	}
 
 	/**
@@ -90,6 +92,10 @@ public class Crawler {
 			examList.add(exam);
 		}
 	}
+	
+	public void logout(){
+		
+	}
 
 	/**
 	 * compares different the old number of exams with the new number
@@ -116,6 +122,9 @@ public class Crawler {
 		} else {
 			System.out.println("Nothing new");
 		}
+		
+		SimpleDateFormat ff = new SimpleDateFormat("HH:mm dd.MM.YYY");
+		System.out.println("Finished: " + ff.format(new Date()));
 	}
 	
 	private int load() {
