@@ -33,21 +33,18 @@ public class Crawler {
 
 	public void login() throws Exception {
 		try (final WebClient webClient = new WebClient()) {
-
+			System.out.println("connecting...");
 			HtmlPage cas = webClient.getPage(
 					"https://cas.uni-mannheim.de/cas/login?service=https%3A%2F%2Fportal.uni-mannheim.de%2Fqisserver%2Frds%3Fstate%3Duser%26type%3D1");
 			HtmlForm form = cas.getForms().get(0);
-			HtmlSubmitInput button = form.getInputByName("submit");
-			HtmlTextInput name = form.getInputByName("username");
-			HtmlPasswordInput pw = form.getInputByName("password");
-
-			name.setValueAttribute(Config.loadProp("PORTAL_NAME"));
-			pw.setValueAttribute(Config.loadProp("PORTAL_PW"));
-
-			HtmlPage portalStart = button.click();
+			
+			form.getInputByName("username").setValueAttribute(Config.loadProp("PORTAL_NAME"));
+			form.getInputByName("password").setValueAttribute(Config.loadProp("PORTAL_PW"));
+			
+			HtmlPage portalStart = form.getInputByName("submit").click();
+			
 			System.out.println("logging in...");
-			HtmlPage pruefungen = portalStart.getAnchors().get(14).click();
-			HtmlPage notenspiegel = pruefungen.getAnchors().get(23).click();
+			HtmlPage notenspiegel = ((HtmlPage)portalStart.getAnchors().get(14).click()).getAnchors().get(23).click();
 			Iterator<HtmlElement> it = notenspiegel.getHtmlElementDescendants().iterator();
 			System.out.println("finding table...");
 			while (it.hasNext()) {

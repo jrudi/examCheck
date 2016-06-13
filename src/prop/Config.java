@@ -9,13 +9,11 @@ public class Config {
 
 		Properties prop = new Properties();
 		try {
-
 			String path = findPath();
 			prop.load(new FileInputStream(path));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
 		return prop.getProperty(property);
 	}
 
@@ -35,13 +33,11 @@ public class Config {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
-	public static  String findPath(){
+	public static String findPath(){
 		File jarPath = new File(Config.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		String propertiesPath = jarPath.getParentFile().getAbsolutePath();
 		return propertiesPath + "/config.properties";
 	}
-
 }

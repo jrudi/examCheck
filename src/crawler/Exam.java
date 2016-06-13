@@ -31,7 +31,6 @@ public class Exam {
 		this.name = name;
 	}
 
-
 	public Date getDatum() {
 		return datum;
 	}
@@ -62,9 +61,7 @@ public class Exam {
 	}
 	
 	public String save(){
-		String s = this.name + "//" + sdf.format(this.datum) + "//" + this.note + "//" + this.ects + "//" + this.bestanden;
-	
-		return s;
+		return this.name + "//" + sdf.format(this.datum) + "//" + this.note + "//" + this.ects + "//" + this.bestanden;
 	}
 	
 	public static Exam readFile(String in){
